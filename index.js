@@ -1,112 +1,138 @@
+/* Exercises
+Create a person object that contains three keys: name, age and country.
+Use yourself as an example to set the values for name, age and country.
 
-let cards = [];
-let sum = 0;
-let sumEl = document.querySelector("#sum-el");
+create a function logData(), that uses the person object to create a string
+in the following format:
+"Per is 35 years old and lives in Norway
+Call the logData() function to verify that it works
+ */
 
-let win = false;
-let isAlive = false;
-let msg = "";
-let messageEl= document.getElementById("message-el");
-let cardsEl = document.getElementById("cards-el");
-
-let player={
+let person = {
     name: "Tie",
-    chips: 1000
+    age: 2,
+    country: "Switzerland"
 }
+function logData(){
+    let sentence = person.name + " is " + person.age + " years old and lives in " + person.country +"."
+    return sentence
+}
+console.log(logData())
 
-let playerEl = document.getElementById("player-el")
-playerEl.textContent = player.name +": $"+player.chips;
+/*
+less than 6 years old -> free
+6 to 17 years old     -> child discount
+18 to 26 years old    -> student discount
+27 to 66 years old    -> full price
+over 66 years old     -> senior citizen discount
 
-if (win && isAlive){
-    console.log("Winning cash is on your bank account!");
-}else if (!win && isAlive){
-    console.log("Not quite there yet.");
+Create a conditional statement (if/else/else if) that logs out the discount
+The passenger will get based upon the value of the age variable
+
+ */
+
+let age = 67
+    //Math.floor(Math.random()*100)+1;
+
+let isFree = false;
+let isDiscounted = false;
+let studentDiscount = false;
+let fullPrice = false;
+let seniorCitizenDiscount = false;
+let price;
+
+if(age<=6){
+    isFree = true;
+    price = 0;
+} else if(age<=17){
+    isDiscounted = true;
+    price = 3;
+} else if(age<=26){
+    studentDiscount = true;
+    price = 4;
+}else if(age<=66){
+    fullPrice = true;
+    price = 10;
 }else{
-    console.log("You lost.");
-}
-function startGame(){
-    isAlive = true;
-    let num1 = getRandomCard();
-    let num2 = getRandomCard();
-    cards.push(num1, num2);
-    console.log(cards)
-    sum = num1 + num2;
-    renderGame();
+    seniorCitizenDiscount = true;
+    price = 5;
 }
 
-function renderGame(){
-    /* Write the conditional according to these rules:
-    - if less than or equal to 20 -> "Do you want to draw a new card?"
-    - else if exactly 21 -> "Woohoo! You got blackjack!"
-    - else -> "You're out of the game."
-     */
-    sumEl.textContent = "Sum: "+ sum;
-    cardsEl.textContent = "Cards: ";
-    /*
-    Create a for-loop that renders out all the cards instead of just two.
-     */
-    for(let i = 0; i < cards.length; i ++){
-        cardsEl.textContent += cards[i]+" ";
+console.log("Your age is: "+age+ " and therefore you have to pay: "+price+"$.")
+let largeCountries = ["Russia", "China", "USA", "Indonesia", "India", "Pakistan", "Australia"];
+
+/*
+Use a for loop to log the following to the console:
+The 5 largest countries in the world:
+- China,
+- India
+- USA
+- Indonesia
+- Pakistan
+ */
+
+for(let i = 0; i< largeCountries.length; i++){
+    console.log(largeCountries[i])
+}
+
+largeCountries.shift()
+console.log(largeCountries)
+largeCountries.pop()
+console.log(largeCountries)
+largeCountries.push("Tuvalu");
+largeCountries.unshift(" Monaco")
+console.log(largeCountries)
+/*
+You need to fix the largeCountries array, so that Russia and Australia
+are added back to the array at the right places and Tuvalu and Monaco get taken away.
+ */
+
+largeCountries.shift()
+console.log(largeCountries)
+largeCountries.unshift("Russia")
+console.log(largeCountries)
+largeCountries.pop()
+largeCountries.push("Australia")
+console.log(largeCountries)
+
+let dayOfMonth = 3;
+let weekday = "Friday"
+
+/*
+If it is Friday the 13th log out 😱
+Use &&
+ */
+
+if(weekday === "Friday" && dayOfMonth === 13){
+    console.log("😱")
+} else{
+    console.log("Not Friday the 13th")
+}
+
+let hands = ["rock","paper","scissor"]
+//Create a function that returns a random item from the array
+function rPS() {
+    let random = Math.floor(Math.random()*3)
+    return hands[random];
+}
+console.log(rPS())
+
+let fruit = ["orange","apple", "orange", "apple", "apple", "orange", "apple", "orange"]
+let appleShelf = document.getElementById("apple-shelf");
+let orangeShelf = document.getElementById("orange-shelf")
+/*
+Create a function that puts appes onto the apple shelf and
+oranges onto the orangeShelf. Use a for lop
+a conditional statement and the textContent property
+ */
+
+function sort(){
+    for(let i =0; i<fruit.length; i++){
+        if(fruit[i]==="apple"){
+            appleShelf.textContent += "apple "
+        } else {
+            orangeShelf.textContent += "orange "
+        }
     }
-
-    if (sum<=20){
-        msg = "Do you want to draw a new card?";
-    }else if (sum ===21){
-        msg = "You got blackjack!";
-        win = true;
-    } else{
-        msg = "You're out of the game.";
-        isAlive = false;
-    }
-    messageEl.textContent = " " + msg;
 }
-
-//Create a function that always returns the number 5
-function getRandomCard(){
-    let randomNum = Math.floor(Math.random()*13)+1;
-    if(randomNum>10){
-        return 10;
-    } else if (randomNum===1){
-        return 11
-    }else{
-        return randomNum;
-    }
-}
-
-function newCard(){
-    if(isAlive && !win){
-        console.log("New card");
-        let newCard = getRandomCard();
-        sum += newCard;
-        cards.push(newCard);
-        cardsEl.textContent += cards;
-        console.log(cards);
-        renderGame();
-    } else if(isAlive && win){
-        cardsEl.textContent = "Congratulations!"
-    }
-    else{
-        cardsEl.textContent = "You lost";
-    }
-}
-
-
-/* cmd+d or ctrl+d and click the multiple words like return and you can edit the return keywords on multiple lines*/
-let raceTime1 = [100,103,104,106];
-function totalRaceTime(){
-    let tRT = 0;
-    for(let i = 0; i<raceTime1.length; i++){
-        let totalRT = raceTime1[i];
-        tRT +=totalRT;
-    }
-    return tRT
-}
-
-let castles = {
-    occupied: false,
-    name: "Count Dracula's Castle",
-    rooms: 13,
-    victims: ["Jessica", "Patrick", "Thomas", "Heidi", "Bram"]
-}
-console.log(castles.name);
-console.log(castles.rooms);
+sort()
