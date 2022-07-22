@@ -9,20 +9,11 @@ body{
 h1{
     color: goldenrod;
 }
-#message-el{
-    color: whitesmoke;
-    font-style: italic;
+div{
+    background-color: gold;
+    color: green;
+    border: white;
+    padding: 1em;
+    margin: 1em;
 }
-p{
-    color: whitesmoke;
-}
-button{
-    color: #016f32;
-    background-color: goldenrod;
-    min-width: 150px;
-    padding: 2em;
-    font-weight: bold;
-    border: none;
-    border-radius: 2px;
-    font-size: 0.7em;
-}
+
